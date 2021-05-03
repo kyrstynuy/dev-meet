@@ -17,10 +17,10 @@ class MainActivity : DaggerAppCompatActivity() {
         setContentView(R.layout.main_activity)
         setSupportActionBar(findViewById(R.id.toolbar))
         AndroidInjection.inject(this)
-        setupConductor()
+        setUpRouter()
     }
 
-    private fun setupConductor() {
+    private fun setUpRouter() {
         router.attachRouter(this, findViewById(R.id.mainActivity_frameLayout_content))
         router.setRoot(ListFragment())
     }
