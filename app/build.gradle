@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+apply from: '../dependencies-groups.gradle'
+apply from: '../config-android.gradle'
+apply from: '../config-properties.gradle'
+
+enum BuildType {
+    DEBUG,
+    RELEASE
+}
+
+static def getAppName(BuildType buildType) {
+    String APP_NAME = "DevMeet"
+    switch (buildType) {
+        case BuildType.DEBUG:
+            return APP_NAME + " (D)"
+        case BuildType.RELEASE:
+            return APP_NAME
+    }
+}
+
+android {
+
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.kryzl.meetthedevs"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            resValue "string", "app_name", getAppName(BuildType.DEBUG)
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", getAppName(BuildType.RELEASE)
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    kotlin()
+    archiComponents()
+    injection()
+    network()
+    timber()
+    ui()
+    androidTest()
+    unitTest()
+    utils()
+}

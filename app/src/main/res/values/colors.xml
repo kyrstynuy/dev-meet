@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="light_gray">#EDEDED</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="accent">#FF0A54</color>
+    <color name="primary">#FF7096</color>
+    <color name="primaryDark">#FF477E</color>
+    <color name="background">#E2E2E2</color>
+    <color name="inputBackground">#FAE0E4</color>
+    <color name="disabledBackground">#70727f</color>
+
+    <color name="textPrimary">#333333</color>
+    <color name="textDarker">#1C1C1C</color>
+    <color name="textSecondary">#70727f</color>
+</resources>

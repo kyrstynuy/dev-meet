@@ -1,0 +1,85 @@
+ext.deps = [
+        /**
+         * Build
+         */
+        'build' : [
+                'gradle' : "com.android.tools.build:gradle:$versions.gradle",
+                'kotlin' : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+        ],
+
+        'kotlin' : [
+                'coroutines' : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.kotlinCoroutines",
+                'coroutinesAndroid' : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.kotlinCoroutines",
+                'lib' : "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin",
+        ],
+
+        'androidSupport' : [
+                'app' : "androidx.appcompat:appcompat:$versions.androidx",
+                'compat' : "androidx.core:core:$versions.androidx",
+                'constraint' : "androidx.constraintlayout:constraintlayout:$versions.constraintLayout",
+                'design' : "com.google.android.material:material:$versions.androidSupport",
+        ],
+
+        'archiComponents' : [
+                'compiler' : "androidx.lifecycle:lifecycle-compiler:$versions.archiComponents",
+                'extensions' : "androidx.lifecycle:lifecycle-extensions:$versions.archiComponents",
+                'liveData' : "androidx.lifecycle:lifecycle-livedata:$versions.archiComponents",
+                'testing' : "androidx.arch.core:core-testing:$versions.archiComponents",
+                'runtime' : "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle",
+                'viewModel' : "androidx.lifecycle:lifecycle-viewmodel:$versions.lifecycle",
+                'viewModelKtx' : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle",
+                'conductor' : [
+                        'main' : "com.bluelinelabs:conductor:$versions.conductor",
+                        'support' : "com.bluelinelabs:conductor-support:$versions.conductor"
+                ]
+        ],
+
+        'injection' : [
+                'dagger' : "com.google.dagger:dagger:$versions.dagger",
+                'daggerCompiler' : "com.google.dagger:dagger-compiler:$versions.dagger",
+                'android' : "com.google.dagger:dagger-android:$versions.dagger",
+                'androidSupport' :  "com.google.dagger:dagger-android-support:$versions.dagger",
+                'androidProcessor' :  "com.google.dagger:dagger-android-processor:$versions.dagger",
+                'javaxAnnotation' : "javax.annotation:jsr250-api:$versions.javaxAnnotation",
+                'javaxInject' : "javax.inject:javax.inject:$versions.javaxInject"
+        ],
+
+        'network' : [
+                'okHttpLoggingInterceptor' : "com.squareup.okhttp3:logging-interceptor:$versions.okHttpLoggingInterceptor",
+                'retrofitConverterGson' : "com.squareup.retrofit2:converter-gson:$versions.retrofit",
+                'retrofit': "com.squareup.retrofit2:retrofit:$versions.retrofit"
+        ],
+
+        'libPhoneNumber' : "com.googlecode.libphonenumber:libphonenumber:$versions.libPhoneNumber",
+        'jodatime' : "joda-time:joda-time:$versions.jodatime",
+        'timber' : "com.jakewharton.timber:timber:$versions.timber",
+        'glide' : "com.github.bumptech.glide:glide:$versions.glide",
+
+        /**
+         * Testing
+         */
+        'sharedTest': [
+                'runner' : "androidx.test:runner:$versions.androidx",
+                'rules' : "androidx.test:rules:$versions.androidx",
+                'espresso' : "androidx.test.espresso:espresso-core:$versions.espresso",
+                'jUnit' : "androidx.test.ext:junit:$versions.jUnit"
+        ],
+
+        'androidTest' : [
+                'coreTesting' : "androidx.arch.core:core-testing:$versions.archiComponents",
+
+        ],
+
+        'unitTest' : [
+                'jUnit' : "androidx.test.ext:junit:$versions.jUnit",
+                'kluent' : "org.amshove.kluent:kluent:$versions.kluent",
+                'kotlin' : "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlinTest",
+                'mockito' : "com.nhaarman:mockito-kotlin:$versions.mockito",
+                'hamcrestCore' : "org.hamcrest:hamcrest-core:$versions.hamcrest",
+                'hamcrestLibrary' : "org.hamcrest:hamcrest-library:$versions.hamcrest",
+                'roboelectric' : "org.robolectric:robolectric:$versions.roboelectric",
+                'timberRule' : "net.lachlanmckee:timber-junit-rule:$versions.timberRule",
+                'kotlinxCoroutinesTest' : "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.kotlinxCoroutinesTest",
+                'testCoroutineRule' : "com.github.marcinOz:TestCoroutineRule:$versions.testCoroutineRule"
+        ]
+]

@@ -1,0 +1,120 @@
+def Group(Closure closure) {
+  closure.delegate = dependencies
+  return closure
+}
+
+/**
+ All groups below for easy copy/pasting:
+
+ kotlin()
+ archiComponents()
+ injection()
+ network()
+ timber()
+ ui()
+ **/
+ext {
+
+  /**
+   * Kotlin
+   */
+  kotlin = Group {
+    implementation deps.kotlin.lib
+    implementation deps.kotlin.coroutines
+    implementation deps.kotlin.coroutinesAndroid
+  }
+
+  /**
+   * Architecture components
+   */
+  archiComponents = Group {
+    implementation deps.archiComponents.runtime
+    implementation deps.archiComponents.extensions
+    implementation deps.archiComponents.liveData
+    implementation deps.archiComponents.conductor.main
+    implementation deps.archiComponents.conductor.support
+    api deps.archiComponents.viewModelKtx
+  }
+
+  /**
+   * Dependency Injection (DI)
+   */
+  injection = Group {
+    implementation deps.injection.dagger
+    implementation deps.injection.android
+    implementation deps.injection.androidSupport
+    kapt deps.injection.daggerCompiler
+    kapt deps.injection.androidProcessor
+    compileOnly deps.injection.javaxAnnotation
+    compileOnly deps.injection.javaxInject
+  }
+
+  /**
+   * Network
+   */
+  network = Group {
+    implementation deps.network.retrofit
+    implementation deps.network.retrofitConverterGson
+    implementation deps.network.okHttpLoggingInterceptor
+  }
+
+  /**
+   * Timber (for logging)
+   */
+  timber = Group {
+    implementation deps.timber
+  }
+
+  /**
+   * UI
+   */
+  ui = Group {
+    api deps.androidSupport.compat
+    implementation deps.androidSupport.app
+    implementation deps.androidSupport.compat
+    implementation deps.androidSupport.constraint
+    implementation deps.androidSupport.design
+    implementation deps.glide
+  }
+
+  utils = Group {
+    implementation (deps.libPhoneNumber) {
+      exclude group: 'com.google.guava', module: 'listenablefuture'
+    }
+    implementation deps.jodatime
+  }
+
+  /**
+   * Android Testing
+   */
+  androidTest = Group {
+    androidTestImplementation deps.sharedTest.runner
+    androidTestImplementation deps.sharedTest.espresso
+    androidTestImplementation (deps.sharedTest.jUnit) { exclude group: 'org.hamcrest' }
+    androidTestImplementation deps.androidTest.coreTesting
+  }
+
+  /**
+   * Testing
+   */
+  unitTest = Group {
+    testImplementation deps.archiComponents.testing
+    testImplementation (deps.sharedTest.jUnit) { exclude group: 'org.hamcrest' }
+    testImplementation deps.sharedTest.runner
+    testImplementation deps.sharedTest.rules
+    testImplementation deps.sharedTest.espresso
+    testImplementation deps.unitTest.hamcrestCore
+    testImplementation deps.unitTest.hamcrestLibrary
+    testImplementation deps.unitTest.kluent
+    testImplementation deps.unitTest.kotlin
+    testImplementation deps.unitTest.mockito
+    testImplementation deps.unitTest.roboelectric
+    testImplementation deps.unitTest.kotlinxCoroutinesTest
+    testImplementation deps.unitTest.testCoroutineRule
+    testImplementation deps.unitTest.timberRule
+
+    //For Dependency Injection - Dagger
+    kaptTest deps.injection.daggerCompiler
+  }
+
+}

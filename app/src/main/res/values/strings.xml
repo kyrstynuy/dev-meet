@@ -1,0 +1,25 @@
+<resources>
+
+    <string name="welcome_message">Meet the Devs!</string>
+    <string name="label_no_data">You haven\'t met any developers yet.\n\nCare to add one?</string>
+
+    <string name="default_content_description">default_content_description</string>
+
+    <string name="error_fetching_data">Uh-oh, an error was encountered.</string>
+
+    <string name="details_label_name">Name</string>
+    <string name="details_label_email">Email</string>
+    <string name="details_label_mobile_no">Mobile No.</string>
+    <string name="details_label_company_name">Company</string>
+
+    <string name="action_edit">Edit Details</string>
+    <string name="action_add">Add Details</string>
+    <string name="action_submit">Submit</string>
+    <string name="action_delete">Delete</string>
+
+    <string name="input_error">Please enter a valid %s</string>
+    <string name="success_update">Successfully updated %s!</string>
+    <string name="success_added">Successfully added %s!</string>
+    <string name="success_deleted">Deleted %s!</string>
+
+</resources>
