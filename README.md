@@ -65,13 +65,13 @@ This is a simple repository app for developers' information
 
 This build will connect to the following endpoint for all requests:
 
-	[https://kryzlmeet.free.beeceptor.com/developers/](https://kryzlmeet.free.beeceptor.com/developers/)
+[https://kryzlmeet.free.beeceptor.com/developers/](https://kryzlmeet.free.beeceptor.com/developers/)
 
 # Mocking Responses
 
 You may edit the mock responses here:
 
-	[https://beeceptor.com/console/kryzlmeet](https://beeceptor.com/console/kryzlmeet)
+[https://beeceptor.com/console/kryzlmeet](https://beeceptor.com/console/kryzlmeet)
 
 # Native Android Architecture
 
