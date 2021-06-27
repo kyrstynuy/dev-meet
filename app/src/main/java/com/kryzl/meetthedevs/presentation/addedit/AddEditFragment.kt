@@ -7,37 +7,50 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.kryzl.meetthedevs.R
 import com.kryzl.meetthedevs.base.presentation.BaseFragment
+import com.kryzl.meetthedevs.databinding.AddEditFragmentBinding
 import com.kryzl.meetthedevs.domain.Developer
-import kotlinx.android.synthetic.main.add_edit_fragment.view.*
 
-class AddEditFragment(private val developer: Developer? = null) : BaseFragment<AddEditViewModel>() {
+class AddEditFragment : BaseFragment<AddEditViewModel, AddEditFragmentBinding>() {
+
+    var developer: Developer? = null
 
     override fun getLayoutResourceId(): Int = R.layout.add_edit_fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setViews(view)
-        setListeners(view)
-        setObservers(view)
+        developer = arguments?.get(KEY_DEVELOPER) as Developer?
+        setViews()
+        setListeners()
+        setObservers()
     }
 
-    private fun setViews(view: View) {
-        view.add_edit_submit.isEnabled = false
-        view.add_edit_header.text = developer?.let {
-            view.full_name_edit_text.setText(developer.name)
+    override val hasDataBinding: Boolean = true
+
+    private fun setViews() {
+        viewDataBinding?.apply {
+            addEditSubmit.isEnabled = false
+            addEditHeader.text = developer?.let {
+                setDetails(developer!!)
+                injectedContext.getString(R.string.action_edit)
+            } ?: injectedContext.getString(R.string.action_add)
+        }
+    }
+
+    private fun setDetails(developer: Developer) {
+        viewDataBinding?.apply {
+            fullNameEditText.setText(developer.name)
             viewModel.validateName(developer.name)
-            view.mobile_no_edit_text.setText(developer.mobileNo)
+            mobileNoEditText.setText(developer.mobileNo)
             viewModel.validateMobile(developer.mobileNo)
-            view.email_edit_text.setText(developer.email)
+            emailEditText.setText(developer.email)
             viewModel.validateEmail(developer.email)
-            view.company_edit_text.setText(developer.companyName)
+            companyEditText.setText(developer.companyName)
             viewModel.validateCompany(developer.companyName)
-            injectedContext.getString(R.string.action_edit)
-        } ?: injectedContext.getString(R.string.action_add)
+        }
     }
 
-    private fun setListeners(view: View) {
-        view.full_name_edit_text.addTextChangedListener(object : TextWatcher {
+    private fun setListeners() {
+        viewDataBinding?.fullNameEditText?.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 // no action
             }
@@ -51,7 +64,7 @@ class AddEditFragment(private val developer: Developer? = null) : BaseFragment<A
             }
         })
 
-        view.mobile_no_edit_text.addTextChangedListener(object : TextWatcher {
+        viewDataBinding?.mobileNoEditText?.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 // no action
             }
@@ -65,7 +78,7 @@ class AddEditFragment(private val developer: Developer? = null) : BaseFragment<A
             }
         })
 
-        view.email_edit_text.addTextChangedListener(object : TextWatcher {
+        viewDataBinding?.emailEditText?.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 // no action
             }
@@ -79,7 +92,7 @@ class AddEditFragment(private val developer: Developer? = null) : BaseFragment<A
             }
         })
 
-        view.company_edit_text.addTextChangedListener(object : TextWatcher {
+        viewDataBinding?.companyEditText?.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 // no action
             }
@@ -93,32 +106,37 @@ class AddEditFragment(private val developer: Developer? = null) : BaseFragment<A
             }
         })
 
-        view.add_edit_submit.setOnClickListener {
+        viewDataBinding?.addEditSubmit?.setOnClickListener {
             if (developer != null) {
-                developer.name = view.full_name_edit_text.text.toString().trim()
-                developer.mobileNo = view.mobile_no_edit_text.text.toString().trim()
-                developer.email = view.email_edit_text.text.toString().trim()
-                developer.companyName = view.company_edit_text.text.toString().trim()
-                viewModel.updateDeveloper(developer)
+                viewDataBinding?.let {
+                    developer!!.name = it.fullNameEditText.text.toString().trim()
+                    developer!!.mobileNo = it.mobileNoEditText.text.toString().trim()
+                    developer!!.email = it.emailEditText.text.toString().trim()
+                    developer!!.companyName = it.companyEditText.text.toString().trim()
+                    viewModel.updateDeveloper(developer!!)
+                }
             } else {
-                viewModel.addDeveloper(
-                    Developer(
-                        name =  view.full_name_edit_text.text.toString().trim(),
-                        mobileNo = view.mobile_no_edit_text.text.toString().trim(),
-                        email = view.email_edit_text.text.toString().trim(),
-                        companyName = view.company_edit_text.text.toString().trim()))
+                viewDataBinding?.let {
+                    viewModel.addDeveloper(
+                            Developer(
+                                    name =  it.fullNameEditText.text.toString().trim(),
+                                    mobileNo = it.mobileNoEditText.text.toString().trim(),
+                                    email = it.emailEditText.text.toString().trim(),
+                                    companyName = it.companyEditText.text.toString().trim()))
+                }
             }
         }
     }
 
-    private fun setObservers(view: View) {
+    private fun setObservers() {
         viewModel.isValidName.observe(
             viewLifecycleOwner,
             Observer {
                 if (!it) {
-                    view.add_edit_fullname.error = resources.getString(R.string.input_error, "name")
+                    viewDataBinding?.addEditFullname?.error =
+                        resources.getString(R.string.input_error, "name")
                 } else {
-                    view.add_edit_fullname.isErrorEnabled = false
+                    viewDataBinding?.addEditFullname?.isErrorEnabled = false
                 }
             }
         )
@@ -127,9 +145,10 @@ class AddEditFragment(private val developer: Developer? = null) : BaseFragment<A
             viewLifecycleOwner,
             Observer {
                 if (!it) {
-                    view.add_edit_mobile_no.error = resources.getString(R.string.input_error, "mobile number")
+                    viewDataBinding?.addEditMobileNo?.error =
+                        resources.getString(R.string.input_error, "mobile number")
                 } else {
-                    view.add_edit_mobile_no.isErrorEnabled = false
+                    viewDataBinding?.addEditMobileNo?.isErrorEnabled = false
                 }
             }
         )
@@ -138,9 +157,10 @@ class AddEditFragment(private val developer: Developer? = null) : BaseFragment<A
             viewLifecycleOwner,
             Observer {
                 if (!it) {
-                    view.add_edit_email.error = resources.getString(R.string.input_error, "email")
+                    viewDataBinding?.addEditEmail?.error =
+                        resources.getString(R.string.input_error, "email")
                 } else {
-                    view.add_edit_email.isErrorEnabled = false
+                    viewDataBinding?.addEditEmail?.isErrorEnabled = false
                 }
             }
         )
@@ -149,9 +169,10 @@ class AddEditFragment(private val developer: Developer? = null) : BaseFragment<A
             viewLifecycleOwner,
             Observer {
                 if (!it) {
-                    view.add_edit_company.error = resources.getString(R.string.input_error, "company name")
+                    viewDataBinding?.addEditCompany?.error =
+                        resources.getString(R.string.input_error, "company name")
                 } else {
-                    view.add_edit_company.isErrorEnabled = false
+                    viewDataBinding?.addEditCompany?.isErrorEnabled = false
                 }
             }
         )
@@ -159,9 +180,13 @@ class AddEditFragment(private val developer: Developer? = null) : BaseFragment<A
         viewModel.allFieldsValid.observe(
             viewLifecycleOwner,
             Observer {
-                view.add_edit_submit.isEnabled = it
+                viewDataBinding?.addEditSubmit?.isEnabled = it
             }
         )
+    }
+
+    companion object {
+        const val KEY_DEVELOPER = "KEY_DEVELOPER"
     }
 
 }

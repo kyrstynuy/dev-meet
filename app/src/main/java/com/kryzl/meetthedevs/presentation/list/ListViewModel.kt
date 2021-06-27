@@ -1,9 +1,11 @@
 package com.kryzl.meetthedevs.presentation.list
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kryzl.meetthedevs.base.functional.CoroutineContextProvider
 import com.kryzl.meetthedevs.base.presentation.BaseViewModel
+import com.kryzl.meetthedevs.base.presentation.withArgs
 import com.kryzl.meetthedevs.domain.Developer
 import com.kryzl.meetthedevs.presentation.addedit.AddEditFragment
 import com.kryzl.meetthedevs.presentation.detail.DetailsFragment
@@ -15,7 +17,9 @@ class ListViewModel @Inject constructor(
     private val coroutineContextProvider: CoroutineContextProvider
 ) : BaseViewModel() {
 
-    val developers: MutableLiveData<List<Developer>> = MutableLiveData()
+    private val mDevelopers: MutableLiveData<List<Developer>> = MutableLiveData()
+    val developers: LiveData<List<Developer>> = mDevelopers
+
     init {
         getDevelopers()
     }
@@ -26,16 +30,18 @@ class ListViewModel @Inject constructor(
             coroutineContextProvider = coroutineContextProvider,
             onResult = {
                 it.either({ failure ->
-                    this.failure.postValue(failure)
+                    this.mFailure.postValue(failure)
                 }, { developers ->
-                    this.developers.postValue(developers)
+                    this.mDevelopers.postValue(developers)
                 })
             }
         )
     }
 
     fun showDetails(developer: Developer) {
-        navigate(DetailsFragment(developer))
+        navigate(DetailsFragment().withArgs {
+            putParcelable(DetailsFragment.KEY_DEVELOPER, developer)
+        })
     }
 
     fun addDeveloper() {

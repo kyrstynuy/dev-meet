@@ -7,15 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.CallSuper
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import com.kryzl.meetthedevs.R
 import com.kryzl.meetthedevs.di.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-abstract class BaseFragment<T: BaseViewModel>: DaggerFragment() {
+abstract class BaseFragment<T: BaseViewModel, U: ViewDataBinding>: DaggerFragment() {
 
     @Inject
     protected lateinit var viewModel: T
@@ -37,12 +38,26 @@ abstract class BaseFragment<T: BaseViewModel>: DaggerFragment() {
 
     abstract fun getLayoutResourceId(): Int
 
+    protected abstract val hasDataBinding: Boolean
+
+    protected var viewDataBinding: U? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(getLayoutResourceId(), container, false)
+        return if (hasDataBinding) {
+            viewDataBinding =
+                DataBindingUtil.inflate(
+                    inflater,
+                    getLayoutResourceId(),
+                    container,
+                    false)
+            viewDataBinding?.root
+        } else {
+            inflater.inflate(getLayoutResourceId(), container, false)
+        }
     }
 
     @CallSuper
@@ -80,7 +95,7 @@ abstract class BaseFragment<T: BaseViewModel>: DaggerFragment() {
                         router.popCurrentFragment()
                     }
                     router.pushFragment(it.fragment, it.tag)
-                    viewModel.nextFragment.value = null
+                    viewModel.clearNextFragment()
                 }
             }
         )

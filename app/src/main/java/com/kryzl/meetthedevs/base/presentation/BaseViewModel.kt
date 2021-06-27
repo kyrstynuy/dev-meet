@@ -1,10 +1,9 @@
 package com.kryzl.meetthedevs.base.presentation
 
-import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kryzl.meetthedevs.base.exception.Failure
-import javax.inject.Inject
 
 /**
  * Credits to Fernando Cejas
@@ -15,40 +14,45 @@ import javax.inject.Inject
  * @see Failure
  */
 abstract class BaseViewModel : ViewModel() {
+    protected val mFailure: MutableLiveData<Failure> = MutableLiveData()
+    private val mNextFragment = MutableLiveData<NavigationRequest>()
+    private val mExit = MutableLiveData<Boolean>()
+    private val mBackToHome = MutableLiveData<Boolean>()
 
-    @Inject
-    lateinit var context: Context
-
-    val failure: MutableLiveData<Failure> = MutableLiveData()
-    val nextFragment = MutableLiveData<NavigationRequest>()
-    val exit = MutableLiveData<Boolean>()
-    val backToHome = MutableLiveData<Boolean>(false)
+    val failure: LiveData<Failure> = mFailure
+    val nextFragment: LiveData<NavigationRequest> = mNextFragment
+    val exit: LiveData<Boolean> = mExit
+    val backToHome: LiveData<Boolean> = mBackToHome
 
     open fun handleFailure(failure: Failure) {
-        this.failure.value = failure
+        this.mFailure.value = failure
     }
 
     protected fun navigate(
-        fragment: BaseFragment<*>,
+        fragment: BaseFragment<*, *>,
         shouldPopCurrentFragment: Boolean = false,
         tag: String? = null
     ) {
-        this.nextFragment.value = NavigationRequest(
+        this.mNextFragment.value = NavigationRequest(
             fragment,
             shouldPopCurrentFragment, tag ?: fragment.javaClass.simpleName
         )
     }
 
     fun exit() {
-        exit.value = true
+        mExit.value = true
+    }
+
+    fun clearNextFragment() {
+        mNextFragment.value = null
     }
 
     open fun backToHome() {
-        backToHome.value = true
+        mBackToHome.value = true
     }
 
     class NavigationRequest(
-        val fragment: BaseFragment<*>,
+        val fragment: BaseFragment<*, *>,
         val shouldPopCurrentFragment: Boolean,
         val tag: String
     )

@@ -22,14 +22,20 @@ class AddEditViewModel @Inject constructor(
     private val coroutineContextProvider: CoroutineContextProvider
 ): BaseViewModel() {
 
-    val isValidName: MutableLiveData<Boolean> = MutableLiveData()
-    val isValidMobile: MutableLiveData<Boolean> = MutableLiveData()
-    val isValidEmail: MutableLiveData<Boolean> = MutableLiveData()
-    val isValidCompany: MutableLiveData<Boolean> = MutableLiveData()
-    val allFieldsValid: LiveData<Boolean> = Transformations.switchMap(isValidName) { isValidNameValue ->
-        Transformations.switchMap(isValidMobile) { isValidMobileValue ->
-            Transformations.switchMap(isValidEmail) { isValidEmailValue ->
-                Transformations.map(isValidCompany) { isValidCompanyValue ->
+    private val mIsValidName: MutableLiveData<Boolean> = MutableLiveData()
+    private val mIsValidMobile: MutableLiveData<Boolean> = MutableLiveData()
+    private val mIsValidEmail: MutableLiveData<Boolean> = MutableLiveData()
+    private val mIsValidCompany: MutableLiveData<Boolean> = MutableLiveData()
+
+    val isValidName: LiveData<Boolean> = mIsValidName
+    val isValidMobile: MutableLiveData<Boolean> = mIsValidMobile
+    val isValidEmail: MutableLiveData<Boolean> = mIsValidEmail
+    val isValidCompany: MutableLiveData<Boolean> = mIsValidCompany
+
+    val allFieldsValid: LiveData<Boolean> = Transformations.switchMap(mIsValidName) { isValidNameValue ->
+        Transformations.switchMap(mIsValidMobile) { isValidMobileValue ->
+            Transformations.switchMap(mIsValidEmail) { isValidEmailValue ->
+                Transformations.map(mIsValidCompany) { isValidCompanyValue ->
                     isValidNameValue && isValidEmailValue && isValidMobileValue && isValidCompanyValue
                 }
             }
@@ -37,19 +43,19 @@ class AddEditViewModel @Inject constructor(
     }
 
     fun validateName(name: String) {
-        isValidName.value = name.trim().isValidName()
+        mIsValidName.value = name.trim().isValidName()
     }
 
     fun validateMobile(mobileNo: String) {
-        isValidMobile.value = mobileNo.trim().isValidMobile()
+        mIsValidMobile.value = mobileNo.trim().isValidMobile()
     }
 
     fun validateEmail(email: String) {
-        isValidEmail.value = email.trim().isValidEmail()
+        mIsValidEmail.value = email.trim().isValidEmail()
     }
 
     fun validateCompany(company: String) {
-        isValidCompany.value = company.trim().isNotBlank()
+        mIsValidCompany.value = company.trim().isNotBlank()
     }
 
     fun updateDeveloper(developer: Developer) {
@@ -59,7 +65,7 @@ class AddEditViewModel @Inject constructor(
             coroutineContextProvider = coroutineContextProvider,
             onResult = {
                 it.either({ failure ->
-                    this.failure.postValue(failure)
+                    this.mFailure.postValue(failure)
                 }, {
                     Handler(Looper.getMainLooper()).post {
                         exit()
@@ -76,7 +82,7 @@ class AddEditViewModel @Inject constructor(
             coroutineContextProvider = coroutineContextProvider,
             onResult = {
                 it.either({ failure ->
-                    this.failure.postValue(failure)
+                    this.mFailure.postValue(failure)
                 }, {
                     Handler(Looper.getMainLooper()).post {
                         exit()

@@ -80,15 +80,26 @@ class Router {
      * @param fragment the fragment
      * @param tag
      */
-    fun pushFragment(fragment: BaseFragment<*>, tag: String? = null) {
+    fun pushFragment(fragment: BaseFragment<*, *>, tag: String? = null) {
         assumeAttached { fragmentManager ->
             val fragmentTag = tag ?: generateTag(fragment)
-            Timber.d("Pushing fragment: $fragmentTag")
-            fragmentManager.beginTransaction().apply {
-                replace(container!!.id, fragment, fragmentTag)
-                addToBackStack(fragmentTag)
-                commit()
+
+            /**
+             * We try to find the fragment by the fragmentTag
+             * and if it returns null,
+             * we use the provided [fragment]
+             */
+            val toBePushed = fragmentManager.findFragmentByTag(tag) as? BaseFragment<*, *> ?: fragment
+
+            if (!toBePushed.isAdded) {
+                Timber.d("Pushing fragment: $fragmentTag")
+                fragmentManager.beginTransaction().apply {
+                    replace(container!!.id, toBePushed, fragmentTag)
+                    addToBackStack(fragmentTag)
+                    commit()
+                }
             }
+
             if (!hasRootFragment) {
                 rootTag = fragmentTag
                 hasRootFragment = true
@@ -101,7 +112,7 @@ class Router {
      *
      * @param fragment the fragment
      */
-    fun setRoot(fragment: BaseFragment<*>) {
+    fun setRoot(fragment: BaseFragment<*, *>) {
         assumeAttached { fragmentManager ->
             if (hasRootFragment) {
                 fragmentManager.popBackStackImmediate(rootTag, POP_BACK_STACK_INCLUSIVE)
@@ -120,7 +131,7 @@ class Router {
     fun handleBack(): Boolean {
         assumeAttached { fragmentManager ->
             val fragmentTag = getTopFragmentTag(1, fragmentManager)
-            val topFragment = fragmentManager.findFragmentByTag(fragmentTag) as? BaseFragment<*>?
+            val topFragment = fragmentManager.findFragmentByTag(fragmentTag) as? BaseFragment<*, *>?
             when (topFragment?.handleBack()) {
                 true -> Timber.d("$fragmentTag did handle back")
                 false -> {
@@ -176,7 +187,7 @@ class Router {
         }
     }
 
-    private fun generateTag(fragment: BaseFragment<*>): String =
+    private fun generateTag(fragment: BaseFragment<*, *>): String =
         fragment.javaClass.simpleName
 
     private fun getTopFragmentTag(index: Int, fragmentManager: FragmentManager) =
