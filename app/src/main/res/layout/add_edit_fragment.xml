@@ -1,127 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/margin_padding_medium"
-    android:background="@color/white">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/add_edit_header"
-        style="@style/text_title"
-        android:layout_marginTop="@dimen/margin_padding_medium"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/add_edit_fullname_label"
-        style="@style/text_default"
-        android:text="@string/details_label_name"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/margin_padding_medium"
-        android:layout_marginBottom="@dimen/margin_padding_medium"
-        app:layout_constraintTop_toBottomOf="@id/add_edit_header"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/add_edit_fullname"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint=" "
-        app:layout_constraintTop_toBottomOf="@id/add_edit_fullname_label"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/full_name_edit_text"
-            android:hint="@string/details_label_name"
-            style="@style/input_field_style" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/add_edit_mobile_no_label"
-        style="@style/text_default"
-        android:text="@string/details_label_mobile_no"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/margin_padding_medium"
-        android:layout_marginBottom="@dimen/margin_padding_medium"
-        app:layout_constraintTop_toBottomOf="@id/add_edit_fullname"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/add_edit_mobile_no"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint=" "
-        app:layout_constraintTop_toBottomOf="@id/add_edit_mobile_no_label"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mobile_no_edit_text"
-            android:hint="@string/details_label_mobile_no"
-            style="@style/input_field_style" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/add_edit_email_label"
-        style="@style/text_default"
-        android:text="@string/details_label_email"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/margin_padding_medium"
-        android:layout_marginBottom="@dimen/margin_padding_medium"
-        app:layout_constraintTop_toBottomOf="@id/add_edit_mobile_no"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/add_edit_email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint=" "
-        app:layout_constraintTop_toBottomOf="@id/add_edit_email_label"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email_edit_text"
-            android:hint="@string/details_label_email"
-            style="@style/input_field_style" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/add_edit_company_label"
-        style="@style/text_default"
-        android:text="@string/details_label_company_name"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/margin_padding_medium"
-        android:layout_marginBottom="@dimen/margin_padding_medium"
-        app:layout_constraintTop_toBottomOf="@id/add_edit_email"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/add_edit_company"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint=" "
-        app:layout_constraintTop_toBottomOf="@id/add_edit_company_label"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/company_edit_text"
-            android:hint="@string/details_label_company_name"
-            style="@style/input_field_style" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.kryzl.meetthedevs.base.presentation.ActionButton
-        android:id="@+id/add_edit_submit"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_padding_large"
-        android:text="@string/action_submit"
-        app:layout_constraintTop_toBottomOf="@id/add_edit_company"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin_padding_medium"
+        android:background="@color/white">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/add_edit_header"
+            style="@style/text_title"
+            android:layout_marginTop="@dimen/margin_padding_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/add_edit_fullname_label"
+            style="@style/text_default"
+            android:text="@string/details_label_name"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/margin_padding_medium"
+            android:layout_marginBottom="@dimen/margin_padding_medium"
+            app:layout_constraintTop_toBottomOf="@id/add_edit_header"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_edit_fullname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint=" "
+            app:layout_constraintTop_toBottomOf="@id/add_edit_fullname_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/full_name_edit_text"
+                android:hint="@string/details_label_name"
+                style="@style/input_field_style" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/add_edit_mobile_no_label"
+            style="@style/text_default"
+            android:text="@string/details_label_mobile_no"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/margin_padding_medium"
+            android:layout_marginBottom="@dimen/margin_padding_medium"
+            app:layout_constraintTop_toBottomOf="@id/add_edit_fullname"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_edit_mobile_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint=" "
+            app:layout_constraintTop_toBottomOf="@id/add_edit_mobile_no_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mobile_no_edit_text"
+                android:hint="@string/details_label_mobile_no"
+                style="@style/input_field_style" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/add_edit_email_label"
+            style="@style/text_default"
+            android:text="@string/details_label_email"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/margin_padding_medium"
+            android:layout_marginBottom="@dimen/margin_padding_medium"
+            app:layout_constraintTop_toBottomOf="@id/add_edit_mobile_no"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_edit_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint=" "
+            app:layout_constraintTop_toBottomOf="@id/add_edit_email_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_edit_text"
+                android:hint="@string/details_label_email"
+                style="@style/input_field_style" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/add_edit_company_label"
+            style="@style/text_default"
+            android:text="@string/details_label_company_name"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/margin_padding_medium"
+            android:layout_marginBottom="@dimen/margin_padding_medium"
+            app:layout_constraintTop_toBottomOf="@id/add_edit_email"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_edit_company"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint=" "
+            app:layout_constraintTop_toBottomOf="@id/add_edit_company_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/company_edit_text"
+                android:hint="@string/details_label_company_name"
+                style="@style/input_field_style" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.kryzl.meetthedevs.base.presentation.ActionButton
+            android:id="@+id/add_edit_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_padding_large"
+            android:text="@string/action_submit"
+            app:layout_constraintTop_toBottomOf="@id/add_edit_company"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

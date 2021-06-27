@@ -1,7 +1,10 @@
 package com.kryzl.meetthedevs.domain
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Developer(
 
     @SerializedName("dev_id")
@@ -22,7 +25,7 @@ data class Developer(
     @SerializedName("company_name")
     var companyName: String
 
-) {
+) : Parcelable {
 
     companion object {
         val EmptyResponse = Developer(null, "", null, "", "", "")

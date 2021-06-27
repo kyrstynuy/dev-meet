@@ -1,61 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".presentation.detail.DetailsFragment">
-    
-    <ImageView
-        android:id="@+id/detail_image"
-        android:layout_width="@dimen/image_large_width_height"
-        android:layout_height="@dimen/image_large_width_height"
-        android:layout_margin="@dimen/margin_padding_large"
-        android:scaleType="fitCenter"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+    xmlns:kksu="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/detail_name"
-        style="@style/text_title"
-        android:layout_marginTop="@dimen/margin_padding_large"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detail_image"/>
+    <data>
+        <variable
+            name="imageHandler"
+            type="com.kryzl.meetthedevs.image.RemoteImageHandler" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/details_recycler_view"
+        <variable
+            name="imageUrl"
+            type="String" />
+
+        <variable
+            name="detailsLayoutManager"
+            type="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <import type="java.util.Map"/>
+        <variable
+            name="detailsMap"
+            type="Map&lt;String, String&gt;" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_padding_large"
-        app:layout_constraintTop_toBottomOf="@id/detail_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".presentation.detail.DetailsFragment">
 
-    <com.kryzl.meetthedevs.base.presentation.ActionButton
-        android:id="@+id/details_edit_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_padding_large"
-        android:text="@string/action_edit"
-        app:layout_constraintTop_toBottomOf="@id/details_recycler_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <ImageView
+            android:id="@+id/detail_image"
+            android:layout_width="@dimen/image_large_width_height"
+            android:layout_height="@dimen/image_large_width_height"
+            android:layout_margin="@dimen/margin_padding_large"
+            android:scaleType="fitCenter"
+            kksu:imageHandler="@{imageHandler}"
+            kksu:imageUrl="@{imageUrl}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/details_delete_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:src="@drawable/ic_baseline_delete_forever_24"
-        android:tint="@null"
-        android:backgroundTint="@color/accent"
-        android:contentDescription="@string/default_content_description"
-        android:layout_margin="@dimen/margin_padding_small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        <TextView
+            android:id="@+id/detail_name"
+            style="@style/text_title"
+            android:layout_marginTop="@dimen/margin_padding_large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detail_image"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/details_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_padding_large"
+            kksu:layoutManager="@{detailsLayoutManager}"
+            kksu:labelValueMap="@{detailsMap}"
+            app:layout_constraintTop_toBottomOf="@id/detail_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.kryzl.meetthedevs.base.presentation.ActionButton
+            android:id="@+id/details_edit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_padding_large"
+            android:text="@string/action_edit"
+            app:layout_constraintTop_toBottomOf="@id/details_recycler_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/details_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:src="@drawable/ic_baseline_delete_forever_24"
+            android:tint="@null"
+            android:backgroundTint="@color/accent"
+            android:contentDescription="@string/default_content_description"
+            android:layout_margin="@dimen/margin_padding_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
